@@ -20,6 +20,13 @@ def verificaId(id, lista_tarefas):
             return 1
     return 0
 
+# Exibe todas as tarefas
+def verTudo(lista_tarefas):
+    if not lista_tarefas:
+        print("Não há tarefas na lista.\n")
+    for tarefa in lista_tarefas:
+        print(f"Descrição: {tarefa.desc}, Tempo: {tarefa.tempo} horas, Status: {tarefa.status}, ID: {tarefa.id}\n")
+
 # Adiciona novas tarefas
 def addTarefa(lista_tarefas):
     id = input("\nIdentificador da tarefa: ")
@@ -43,7 +50,9 @@ def visualizaTarefa(lista_tarefas):
         print("\t3 - Tarefas concluídas")
         print("\t4 - Cancelar")
         opcao = int(input(" \n"))
-        if opcao == 4:
+        if opcao == 1: 
+            verTudo(lista_tarefas)
+        elif opcao == 4:
             break
 
 # Descobrir como retornar as informações e selecionar as tarefas desejadas..
