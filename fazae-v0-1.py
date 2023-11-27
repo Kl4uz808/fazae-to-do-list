@@ -4,44 +4,47 @@
 # Toda NOVA tarefa possui situação ativa
 
 class Tarefa:
-    id = None
-    desc = None
-    tempo = None
-    status = "ativa"
+    def __init__(self, id, desc, tempo):
+        self.id = id
+        self.desc = desc
+        self.tempo = tempo
+        self.status = "ativa"
 
 
-# 1) Adicionar Tarefas
 
-def addTarefa(lista_tarefas):
-    tarefa = Tarefa()
-    tarefa.id = input("\nIdentificador da tarefa: ")
-    tarefa.desc = input("Descrição da tarefa: ")
-    tarefa.tempo = int(input("Tempo para realizar tarefa (em horas): "))
-
-    # SE id for existente = error msg - volta menu
-
-# 1.1) verificar ID
-
-def verificaId(lista_tarefas, id):
+ # Verificar Id existente
+def verificaId(id, lista_tarefas):
+    for tarefa in lista_tarefas:      
+        if tarefa.id == id:
+            print("Erro! Motivo: ID já existe.")
+            return 1
     return 0
 
-    # recebe id informado pelo usuario
-    # busca e compara todos os ID's na lista
-    #retorna valido / nao valido
+# Adiciona novas tarefas
+def addTarefa(lista_tarefas):
+    id = input("\nIdentificador da tarefa: ")
+    if not verificaId(id, lista_tarefas):
+        desc = input("Descrição da tarefa: ")
+        tempo = int(input("Tempo para realizar tarefa (em horas): "))
+        nova_tarefa = Tarefa(id, desc, tempo)
+        lista_tarefas.append(nova_tarefa)
 
 ################################################################################
 
 # 2) Visualizar tarefas
       # Todas as tarefas / Ativas / Concluídas
 
+
 def visualizaTarefa(lista_tarefas):
-    print("Digite o modo de visualização desejado: ")
+    print("Digite o modo de visualização desejado: \n")
     while 1:
         print("\t1 - Todas as tarefas")
         print("\t2 - Tarefas ativas")
         print("\t3 - Tarefas concluídas")
-        opcao = int(input())
-        break
+        print("\t4 - Cancelar")
+        opcao = int(input(" \n"))
+        if opcao == 4:
+            break
 
 # Descobrir como retornar as informações e selecionar as tarefas desejadas..
 
@@ -97,10 +100,8 @@ def menuPrincipal():
 
         if opcao == 1:
             addTarefa(lista_tarefas)
-            break
         elif opcao == 2:
             visualizaTarefa(lista_tarefas)
-            break
         elif opcao == 3:
             atualizaTarefa(lista_tarefas)
             break
