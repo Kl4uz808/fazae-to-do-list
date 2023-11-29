@@ -73,10 +73,32 @@ def visualizaTarefa(lista_tarefas):
 # 3) Atualizar Tarefas
 
 def atualizaTarefa(lista_tarefas):
-      return 0
-
-    #Atualizar dados existentes das tarefas, exceto ID...
-
+    print("\tDigite o ID da tarefa que deseja atualizar: \n")
+    verTudo(lista_tarefas)
+    attid = input()
+    for tarefa in lista_tarefas:
+        if attid == tarefa.id:
+            print("Tarefa selecionada: \n")
+            print(f"Descrição: {tarefa.desc}, Tempo: {tarefa.tempo} horas, Status: {tarefa.status}.\n")
+            print("Digite a opção que deseja atualizar: ")
+            print("\t1 - Descrição")
+            print("\t2 - Tempo")
+            print("\t3 - Status")
+            opt = int(input())
+            if opt == 1:
+                nova_desc = input("Digite a nova descrição: ")
+                tarefa.desc = nova_desc
+            elif opt == 2:
+                novo_tempo = int(input("Digite o novo tempo: "))
+                tarefa.tempo = novo_tempo
+            elif opt == 3:
+                novo_status = int(input("Digite uma opção para o novo status (1 - Ativa, 2 - Concluída): "))
+                if novo_status == 1:
+                    tarefa.status = 'ativa'
+                elif novo_status == 2:
+                    tarefa.status = 'concluída'
+            else:
+                print("Erro. Motivo: operação inválida.")                
 ################################################################################
 
 #4) concluir Tarefas
@@ -97,9 +119,9 @@ def concluiTarefa(lista_tarefas):
 def excluiTarefa(lista_tarefas):
     print("\tLista de tarefas: \n")
     verTudo(lista_tarefas)
-    endtarefa = input("Digite o ID da tarefa que deseja excluir: \n")
+    endid = input("Digite o ID da tarefa que deseja excluir: \n")
     for tarefa in lista_tarefas:
-        if endtarefa == tarefa.id:
+        if endid == tarefa.id:
             lista_tarefas.remove(tarefa)
             print("\nTarefa excluída com sucesso.")
 
@@ -129,7 +151,6 @@ def menuPrincipal():
             visualizaTarefa(lista_tarefas)
         elif opcao == 3:
             atualizaTarefa(lista_tarefas)
-            break
         elif opcao == 4:
             concluiTarefa(lista_tarefas)
         elif opcao == 5:
