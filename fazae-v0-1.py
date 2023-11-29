@@ -47,31 +47,31 @@ def verAtivas(lista_tarefas):
             print(f"Descrição: {tarefa.desc}, Tempo: {tarefa.tempo} horas, ID: {tarefa.id}\n")
         #Não há tarefas ativas/qualquer na lista?
 
-#Exibe apenas tarefas com status finalizada
-def verFinalizada(lista_tarefas):
+#Exibe apenas tarefas com status concluída
+def verConcluida(lista_tarefas):
     for tarefa in lista_tarefas:
-        if tarefa.status == 'finalizada':
+        if tarefa.status == 'concluída':
             print(f"Descrição: {tarefa.desc}, Tempo: {tarefa.tempo} horas, ID: {tarefa.id}\n")
-        #Não há tarefas finalizadas/qualquer na lista?
+        #Não há tarefas concluídas/qualquer na lista?
 
 def visualizaTarefa(lista_tarefas):
     print("Digite o modo de visualização desejado: \n")
     while 1:
         print("\t1 - Todas as tarefas")
         print("\t2 - Tarefas ativas")
-        print("\t3 - Tarefas finalizadas")
-        print("\t4 - Cancelar")
+        print("\t3 - Tarefas concluídas")
+        print("\t4 - Voltar")
         opcao = int(input(" \n"))
         if opcao == 1: 
             verTudo(lista_tarefas)
         elif opcao == 2:
             verAtivas(lista_tarefas)
         elif opcao == 3:
-            verFinalizada(lista_tarefas)
+            verConcluida(lista_tarefas)
         elif opcao == 4:
             break
 
-# !Bônus - prioridade visualização (Ativas -Limite tempo crescente- finalizadas)..
+# !Bônus - prioridade visualização (Ativas -Limite tempo crescente- concluídas)..
 
 ################################################################################
 # 3) Atualizar Tarefas
@@ -83,17 +83,18 @@ def atualizaTarefa(lista_tarefas):
 
 ################################################################################
 
-#4) finalizar Tarefas
+#4) concluir Tarefas
 
-def finalizaTarefa(lista_tarefas):
-    print("\tTarefas que podem ser finalizadas: \n")
+def concluiTarefa(lista_tarefas):
+    print("\tTarefas que podem ser concluídas: \n")
     verAtivas(lista_tarefas)
-    finaliza_id = int(input("Digite o ID da tarefa que deseja finalizar: \n"))
+    conclui_id = input("Digite o ID da tarefa que deseja concluir: \n")
     for tarefa in lista_tarefas:
-        if finaliza_id == tarefa.id and tarefa.status == 'ativa':
-            tarefa.status = 'finalizada'
+        if conclui_id == tarefa.id:
+                tarefa.status = 'concluída'
+                print("Bom trabalho! Tarefa Concluída.")
 
-    # Por qual motivo não muda status / não visualiza finalizada??
+    # Por qual motivo não muda status / não visualiza concluída??
 
 ################################################################################
 
@@ -105,6 +106,8 @@ def excluiTarefa(lista_tarefas):
     #Visualiza TODAS tarefas - digita id desejado - exclui da lista
 
 ################################################################################
+
+
 #6) Menu de opções
 
 def menuPrincipal():
@@ -117,7 +120,7 @@ def menuPrincipal():
         print("\t1 - Adicionar Tarefa")
         print("\t2 - Visualizar Tarefa")
         print("\t3 - Atualizar Tarefa")
-        print("\t4 - Finalizar Tarefa")
+        print("\t4 - Concluir Tarefa")
         print("\t5 - Excluir Tarefa")
         print("\t6 - Encerrar programa")
         opcao = int(input())
@@ -130,7 +133,7 @@ def menuPrincipal():
             atualizaTarefa(lista_tarefas)
             break
         elif opcao == 4:
-            finalizaTarefa(lista_tarefas)
+            concluiTarefa(lista_tarefas)
         elif opcao == 5:
             excluiTarefa(lista_tarefas)
             break
@@ -138,4 +141,5 @@ def menuPrincipal():
             break
         else:
             print("\nOpção inválida")
+            
 menuPrincipal()
