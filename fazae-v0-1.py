@@ -1,15 +1,11 @@
 #Sistema de gerenciamento de tarefas
 
-# Cada tarefa possui ID, descrição, tempo limite (h), situação
-# Toda NOVA tarefa possui situação ativa
-
 class Tarefa:
     def __init__(self, id, desc, tempo):
         self.id = id
         self.desc = desc
         self.tempo = tempo
         self.status = "ativa"
-
 
 
  # Verificar Id existente
@@ -94,16 +90,18 @@ def concluiTarefa(lista_tarefas):
                 tarefa.status = 'concluída'
                 print("Bom trabalho! Tarefa Concluída.")
 
-    # Por qual motivo não muda status / não visualiza concluída??
-
 ################################################################################
 
 #5) Excluir Tarefas
 
 def excluiTarefa(lista_tarefas):
-    return 0
-
-    #Visualiza TODAS tarefas - digita id desejado - exclui da lista
+    print("\tLista de tarefas: \n")
+    verTudo(lista_tarefas)
+    endtarefa = input("Digite o ID da tarefa que deseja excluir: \n")
+    for tarefa in lista_tarefas:
+        if endtarefa == tarefa.id:
+            lista_tarefas.remove(tarefa)
+            print("\nTarefa excluída com sucesso.")
 
 ################################################################################
 
@@ -136,7 +134,6 @@ def menuPrincipal():
             concluiTarefa(lista_tarefas)
         elif opcao == 5:
             excluiTarefa(lista_tarefas)
-            break
         elif opcao == 6:
             break
         else:
