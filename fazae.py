@@ -7,27 +7,26 @@ class Tarefa:
         self.tempo = tempo
         self.status = "ativa"
 
-
 # Verifica se há ID existente para adicionar tarefas
 def verificaId(id, lista_tarefas):
     for tarefa in lista_tarefas:      
         if tarefa.id == id:
-            print("Erro! Motivo: ID já existe.")
+            print("Erro. Motivo: ID já existe.")
             return 1
-    return 0
+    return 0 #Retorna False = ID livre
 
 # Adiciona novas tarefas
 def addTarefa(lista_tarefas):
     id = input("\nIdentificador da tarefa: ")
-    if not verificaId(id, lista_tarefas):
+    if not verificaId(id, lista_tarefas): #Função verificaId deve ser obrigatoriamente falsa para prosseguir
         desc = input("Descrição da tarefa: ")
-        try:
+        try:     #Inicializa um bloco de exceção esperada
             tempo = float(input("Tempo para realizar tarefa (em horas): "))
-            if tempo <= 0:
-                raise ValueError
-        except ValueError:
+            if tempo <= 0:   
+                raise ValueError #Adiciona a condição específica anterior para ValueError 
+        except ValueError: #Executa caso exceção seja satisfeita (Erro durante a conversão de um tipo)
             print("\nErro. Motivo: digite um número válido para definir o tempo.")
-        else:
+        else: #Executa caso tentativa seja válida
             nova_tarefa = Tarefa(id, desc, tempo)
             lista_tarefas.append(nova_tarefa)
             print("\nTarefa adicionada com sucesso!")
@@ -39,28 +38,28 @@ def addTarefa(lista_tarefas):
 # a)Exibe todas as tarefas
 def verTudo(lista_tarefas):
     if not lista_tarefas:
-        print("Não há tarefas na lista.\n")
+        print("\nNão há tarefas na lista.\n")
+        return 0
     for tarefa in lista_tarefas:
-        print(f"Descrição: {tarefa.desc}, Tempo: {tarefa.tempo} horas, Status: {tarefa.status}, ID: {tarefa.id}\n")
-
+        print(f"\nDescrição: {tarefa.desc}, Tempo: {tarefa.tempo} horas, Status: {tarefa.status}, ID: {tarefa.id}\n")
+        return 1
 # b)Exibe apenas tarefas com status ativa
 def verAtivas(lista_tarefas):
     for tarefa in lista_tarefas:
         if tarefa.status == 'ativa':
-            print(f"Descrição: {tarefa.desc}, Tempo: {tarefa.tempo} horas, ID: {tarefa.id}\n")
-        #Não há tarefas ativas/qualquer na lista?
+            print(f"\nDescrição: {tarefa.desc}, Tempo: {tarefa.tempo} horas, Status: {tarefa.status}, ID: {tarefa.id}\n")             
 
 # c)Exibe apenas tarefas com status concluída
 def verConcluida(lista_tarefas):
     for tarefa in lista_tarefas:
         if tarefa.status == 'concluída':
-            print(f"Descrição: {tarefa.desc}, Tempo: {tarefa.tempo} horas, ID: {tarefa.id}\n")
+            print(f"\nDescrição: {tarefa.desc}, Tempo: {tarefa.tempo} horas, Status: {tarefa.status}, ID: {tarefa.id}\n")
         #Não há tarefas concluídas/qualquer na lista?
 
 # menu de visualização de tarefas
 #CORRIGIR SITUACAO LISTA VAZIA
 def visualizaTarefa(lista_tarefas):
-    print("Digite o modo de visualização desejado: \n")
+    print("\nDigite o modo de visualização desejado: \n")
     while 1:
         print("\t1 - Todas as tarefas")
         print("\t2 - Tarefas ativas")
@@ -79,63 +78,65 @@ def visualizaTarefa(lista_tarefas):
 # !Bônus - prioridade visualização (Ativas /Limite tempo crescente/ concluídas)..
 
 ################################################################################
-# Atualizar Tarefas
-#CORRIGIR SITUACAO LISTA VAZIA
-#CORRIGIR ID DIGITADO ERRADO
+# Atualizar Tarefas ***
 def atualizaTarefa(lista_tarefas):
-    print("\tDigite o ID da tarefa que deseja atualizar: \n")
-    verTudo(lista_tarefas)
-    attid = input()
-    for tarefa in lista_tarefas:
-        if attid == tarefa.id:
-            print("Tarefa selecionada: \n")
-            print(f"Descrição: {tarefa.desc}, Tempo: {tarefa.tempo} horas, Status: {tarefa.status}.\n")
-            print("Digite a opção que deseja atualizar: ")
-            print("\t1 - Descrição")
-            print("\t2 - Tempo")
-            print("\t3 - Status")
-            opt = int(input())
-            if opt == 1:
-                nova_desc = input("Digite a nova descrição: ")
-                tarefa.desc = nova_desc
-            elif opt == 2:
-                novo_tempo = float(input("Digite o novo tempo: "))
-                tarefa.tempo = novo_tempo
-            elif opt == 3:
-                novo_status = int(input("Digite uma opção para o novo status (1 - Ativa, 2 - Concluída): "))
-                if novo_status == 1:
-                    tarefa.status = 'ativa'
-                elif novo_status == 2:
-                    tarefa.status = 'concluída'
-            else:
-                print("Erro. Motivo: operação inválida.")                
+    print("\nDigite o ID da tarefa que deseja atualizar: ")
+    if verTudo(lista_tarefas) == True:   #Verifica se há tarefas na lista
+        try:   # Inicia bloco com exceções esperadas
+            attid = input("ID: ") #1ª exceção esperada
+            for tarefa in lista_tarefas:
+                if attid == tarefa.id:
+                    print("\nTarefa selecionada: ")
+                    print(f"\n\tDescrição: {tarefa.desc}, Tempo: {tarefa.tempo} horas, Status: {tarefa.status} ID: {tarefa.id}\n")
+                    print("\nDigite a opção que deseja atualizar: ")
+                    print("\n\t1 - Descrição")
+                    print("\n\t2 - Tempo")
+                    print("\n\t3 - Status")
+                    opt = int(input( )) #2ª exceção esperada
+                    if opt == 1:
+                        nova_desc = input("\nDigite a nova descrição: ")
+                        tarefa.desc = nova_desc
+                    elif opt == 2:
+                        novo_tempo = float(input("\nDigite o novo tempo: "))
+                        tarefa.tempo = novo_tempo
+                    elif opt == 3:
+                        novo_status = input("\nDigite uma opção para o novo status (1 - Ativa, 2 - Concluída): ") #3ª exceção esperada
+                        if novo_status == '1':
+                            tarefa.status = 'ativa'
+                        elif novo_status == '2':
+                            tarefa.status = 'concluída'
+                        else:
+                            raise ValueError #Adiciona a 3ª exceção para ValueError 
+                else:
+                    raise ValueError #Adiciona a 2ª exceção para ValueError 
+        except ValueError: #Adiciona a 1ª e inclui todas as exceções adicionadas ao ValueError, exibe mensagem de erro
+            print("\nErro. Motivo: operação inválida.")             
 ################################################################################
 
 # concluir Tarefas
-#CORRIGIR SITUACAO LISTA VAZIA
+#CORRIGIR SITUACAO LISTA VAZIA DE ATIVAS
 #CORRIGIR ID DIGITADO ERRADO
 def concluiTarefa(lista_tarefas):
-    print("\tTarefas que podem ser concluídas: \n")
+    print("\tTarefas que podem ser concluídas: ")
     verAtivas(lista_tarefas)
-    conclui_id = input("Digite o ID da tarefa que deseja concluir: \n")
+    conclui_id = input("Digite o ID da tarefa que deseja concluir: ")
     for tarefa in lista_tarefas:
         if conclui_id == tarefa.id:
                 tarefa.status = 'concluída'
-                print("Bom trabalho! Tarefa Concluída.")
+                print("\nBom trabalho! Tarefa Concluída.")
 
 ################################################################################
 
 # Excluir Tarefas
-#CORRIGIR SITUACAO LISTA VAZIA
 #CORRIGIR ID DIGITADO ERRADO
 def excluiTarefa(lista_tarefas):
     print("\tLista de tarefas: \n")
-    verTudo(lista_tarefas)
-    endid = input("Digite o ID da tarefa que deseja excluir: \n")
-    for tarefa in lista_tarefas:
-        if endid == tarefa.id:
-            lista_tarefas.remove(tarefa)
-            print("\nTarefa excluída com sucesso.")
+    if verTudo(lista_tarefas) == True:
+        endid = input("Digite o ID da tarefa que deseja excluir: ")
+        for tarefa in lista_tarefas:
+            if endid == tarefa.id:
+                lista_tarefas.remove(tarefa)
+                print("\nTarefa excluída com sucesso.")
 
 ################################################################################
 
