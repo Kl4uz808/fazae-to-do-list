@@ -1,4 +1,4 @@
-#Sistema de gerenciamento de tarefas
+    #Sistema de gerenciamento de tarefas
 
 class Tarefa:
     def __init__(self, id, desc, tempo):
@@ -8,7 +8,7 @@ class Tarefa:
         self.status = "ativa"
 
 
- # Verificar Id existente
+# Verifica se há ID existente para adicionar tarefas
 def verificaId(id, lista_tarefas):
     for tarefa in lista_tarefas:      
         if tarefa.id == id:
@@ -21,35 +21,44 @@ def addTarefa(lista_tarefas):
     id = input("\nIdentificador da tarefa: ")
     if not verificaId(id, lista_tarefas):
         desc = input("Descrição da tarefa: ")
-        tempo = int(input("Tempo para realizar tarefa (em horas): "))
-        nova_tarefa = Tarefa(id, desc, tempo)
-        lista_tarefas.append(nova_tarefa)
+        try:
+            tempo = float(input("Tempo para realizar tarefa (em horas): "))
+            if tempo <= 0:
+                raise ValueError
+        except ValueError:
+            print("\nErro. Motivo: digite um número válido para definir o tempo.")
+        else:
+            nova_tarefa = Tarefa(id, desc, tempo)
+            lista_tarefas.append(nova_tarefa)
+            print("\nTarefa adicionada com sucesso!")
 
 ################################################################################
 
-# 2) Visualizar tarefas
+# Visualizar tarefas
 
-# Exibe todas as tarefas
+# a)Exibe todas as tarefas
 def verTudo(lista_tarefas):
     if not lista_tarefas:
         print("Não há tarefas na lista.\n")
     for tarefa in lista_tarefas:
         print(f"Descrição: {tarefa.desc}, Tempo: {tarefa.tempo} horas, Status: {tarefa.status}, ID: {tarefa.id}\n")
 
-#Exibe apenas tarefas com status ativa
+# b)Exibe apenas tarefas com status ativa
 def verAtivas(lista_tarefas):
     for tarefa in lista_tarefas:
         if tarefa.status == 'ativa':
             print(f"Descrição: {tarefa.desc}, Tempo: {tarefa.tempo} horas, ID: {tarefa.id}\n")
         #Não há tarefas ativas/qualquer na lista?
 
-#Exibe apenas tarefas com status concluída
+# c)Exibe apenas tarefas com status concluída
 def verConcluida(lista_tarefas):
     for tarefa in lista_tarefas:
         if tarefa.status == 'concluída':
             print(f"Descrição: {tarefa.desc}, Tempo: {tarefa.tempo} horas, ID: {tarefa.id}\n")
         #Não há tarefas concluídas/qualquer na lista?
 
+# menu de visualização de tarefas
+#CORRIGIR SITUACAO LISTA VAZIA
 def visualizaTarefa(lista_tarefas):
     print("Digite o modo de visualização desejado: \n")
     while 1:
@@ -67,11 +76,12 @@ def visualizaTarefa(lista_tarefas):
         elif opcao == 4:
             break
 
-# !Bônus - prioridade visualização (Ativas -Limite tempo crescente- concluídas)..
+# !Bônus - prioridade visualização (Ativas /Limite tempo crescente/ concluídas)..
 
 ################################################################################
-# 3) Atualizar Tarefas
-
+# Atualizar Tarefas
+#CORRIGIR SITUACAO LISTA VAZIA
+#CORRIGIR ID DIGITADO ERRADO
 def atualizaTarefa(lista_tarefas):
     print("\tDigite o ID da tarefa que deseja atualizar: \n")
     verTudo(lista_tarefas)
@@ -89,7 +99,7 @@ def atualizaTarefa(lista_tarefas):
                 nova_desc = input("Digite a nova descrição: ")
                 tarefa.desc = nova_desc
             elif opt == 2:
-                novo_tempo = int(input("Digite o novo tempo: "))
+                novo_tempo = float(input("Digite o novo tempo: "))
                 tarefa.tempo = novo_tempo
             elif opt == 3:
                 novo_status = int(input("Digite uma opção para o novo status (1 - Ativa, 2 - Concluída): "))
@@ -101,8 +111,9 @@ def atualizaTarefa(lista_tarefas):
                 print("Erro. Motivo: operação inválida.")                
 ################################################################################
 
-#4) concluir Tarefas
-
+# concluir Tarefas
+#CORRIGIR SITUACAO LISTA VAZIA
+#CORRIGIR ID DIGITADO ERRADO
 def concluiTarefa(lista_tarefas):
     print("\tTarefas que podem ser concluídas: \n")
     verAtivas(lista_tarefas)
@@ -114,8 +125,9 @@ def concluiTarefa(lista_tarefas):
 
 ################################################################################
 
-#5) Excluir Tarefas
-
+# Excluir Tarefas
+#CORRIGIR SITUACAO LISTA VAZIA
+#CORRIGIR ID DIGITADO ERRADO
 def excluiTarefa(lista_tarefas):
     print("\tLista de tarefas: \n")
     verTudo(lista_tarefas)
@@ -127,8 +139,7 @@ def excluiTarefa(lista_tarefas):
 
 ################################################################################
 
-
-#6) Menu de opções
+# Menu de opções
 
 def menuPrincipal():
     print("\tSistema de gerenciamento de tarefas - Faz Ae")
@@ -143,21 +154,23 @@ def menuPrincipal():
         print("\t4 - Concluir Tarefa")
         print("\t5 - Excluir Tarefa")
         print("\t6 - Encerrar programa")
-        opcao = int(input())
+        try:
+            opcao = int(input())
+            if opcao == 1:
+                addTarefa(lista_tarefas)
+            elif opcao == 2:
+                visualizaTarefa(lista_tarefas)
+            elif opcao == 3:
+                atualizaTarefa(lista_tarefas)
+            elif opcao == 4:
+                concluiTarefa(lista_tarefas)
+            elif opcao == 5:
+                excluiTarefa(lista_tarefas)
+            elif opcao == 6:
+                break
+            else:
+                raise ValueError
+        except ValueError:
+            print("\nErro. Motivo: Opção inválida")
 
-        if opcao == 1:
-            addTarefa(lista_tarefas)
-        elif opcao == 2:
-            visualizaTarefa(lista_tarefas)
-        elif opcao == 3:
-            atualizaTarefa(lista_tarefas)
-        elif opcao == 4:
-            concluiTarefa(lista_tarefas)
-        elif opcao == 5:
-            excluiTarefa(lista_tarefas)
-        elif opcao == 6:
-            break
-        else:
-            print("\nOpção inválida")
-            
 menuPrincipal()
