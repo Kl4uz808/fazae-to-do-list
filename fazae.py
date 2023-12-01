@@ -43,21 +43,22 @@ def verTudo(lista_tarefas):
     for tarefa in lista_tarefas:
         print(f"\nDescrição: {tarefa.desc}, Tempo: {tarefa.tempo} horas, Status: {tarefa.status}, ID: {tarefa.id}\n")
         return 1
+
 # b)Exibe apenas tarefas com status ativa
+#Não há tarefas concluídas/qualquer na lista?
 def verAtivas(lista_tarefas):
     for tarefa in lista_tarefas:
         if tarefa.status == 'ativa':
             print(f"\nDescrição: {tarefa.desc}, Tempo: {tarefa.tempo} horas, Status: {tarefa.status}, ID: {tarefa.id}\n")             
 
 # c)Exibe apenas tarefas com status concluída
+#Não há tarefas concluídas/qualquer na lista?
 def verConcluida(lista_tarefas):
     for tarefa in lista_tarefas:
         if tarefa.status == 'concluída':
             print(f"\nDescrição: {tarefa.desc}, Tempo: {tarefa.tempo} horas, Status: {tarefa.status}, ID: {tarefa.id}\n")
-        #Não há tarefas concluídas/qualquer na lista?
 
 # menu de visualização de tarefas
-#CORRIGIR SITUACAO LISTA VAZIA
 def visualizaTarefa(lista_tarefas):
     print("\nDigite o modo de visualização desejado: \n")
     while 1:
@@ -87,7 +88,7 @@ def atualizaTarefa(lista_tarefas):
             for tarefa in lista_tarefas:
                 if attid == tarefa.id:
                     print("\nTarefa selecionada: ")
-                    print(f"\n\tDescrição: {tarefa.desc}, Tempo: {tarefa.tempo} horas, Status: {tarefa.status} ID: {tarefa.id}\n")
+                    print(f"\n\tDescrição: {tarefa.desc}, Tempo: {tarefa.tempo} horas, Status: {tarefa.status} ID: {tarefa.id}")
                     print("\nDigite a opção que deseja atualizar: ")
                     print("\n\t1 - Descrição")
                     print("\n\t2 - Tempo")
@@ -115,7 +116,6 @@ def atualizaTarefa(lista_tarefas):
 
 # concluir Tarefas
 #CORRIGIR SITUACAO LISTA VAZIA DE ATIVAS
-#CORRIGIR ID DIGITADO ERRADO
 def concluiTarefa(lista_tarefas):
     print("\tTarefas que podem ser concluídas: ")
     verAtivas(lista_tarefas)
@@ -124,19 +124,24 @@ def concluiTarefa(lista_tarefas):
         if conclui_id == tarefa.id:
                 tarefa.status = 'concluída'
                 print("\nBom trabalho! Tarefa Concluída.")
+        else:
+            print("\nErro. Motivo: ID não existe")
 
 ################################################################################
 
 # Excluir Tarefas
-#CORRIGIR ID DIGITADO ERRADO
 def excluiTarefa(lista_tarefas):
-    print("\tLista de tarefas: \n")
+    print("\tLista de tarefas: ")
     if verTudo(lista_tarefas) == True:
         endid = input("Digite o ID da tarefa que deseja excluir: ")
         for tarefa in lista_tarefas:
             if endid == tarefa.id:
+                print("\nTarefa selecionada: ")
+                print(f"\n\tDescrição: {tarefa.desc}, Tempo: {tarefa.tempo} horas, Status: {tarefa.status} ID: {tarefa.id}")
                 lista_tarefas.remove(tarefa)
                 print("\nTarefa excluída com sucesso.")
+            else:
+                print("\nErro. Motivo: ID não existe.")
 
 ################################################################################
 
