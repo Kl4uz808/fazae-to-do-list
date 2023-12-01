@@ -42,7 +42,7 @@ def verTudo(lista_tarefas):
         return 0
     for tarefa in lista_tarefas:
         print(f"\nDescrição: {tarefa.desc}, Tempo: {tarefa.tempo} horas, Status: {tarefa.status}, ID: {tarefa.id}\n")
-        return 1
+return 1
 
 # b)Exibe apenas tarefas com status ativa
 #Não há tarefas concluídas/qualquer na lista?
@@ -79,7 +79,7 @@ def visualizaTarefa(lista_tarefas):
 # !Bônus - prioridade visualização (Ativas /Limite tempo crescente/ concluídas)..
 
 ################################################################################
-# Atualizar Tarefas ***
+# Atualizar Tarefas !!!!
 def atualizaTarefa(lista_tarefas):
     print("\nDigite o ID da tarefa que deseja atualizar: ")
     if verTudo(lista_tarefas) == True:   #Verifica se há tarefas na lista
@@ -111,7 +111,7 @@ def atualizaTarefa(lista_tarefas):
                 else:
                     raise ValueError #Adiciona a 2ª exceção para ValueError 
         except ValueError: #Adiciona a 1ª e inclui todas as exceções adicionadas ao ValueError, exibe mensagem de erro
-            print("\nErro. Motivo: operação inválida.")             
+            print("\nErro. Motivo: operação inválida.")   
 ################################################################################
 
 # concluir Tarefas
