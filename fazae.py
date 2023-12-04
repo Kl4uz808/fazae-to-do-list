@@ -42,17 +42,15 @@ def verTudo(lista_tarefas):
         return 0
     for tarefa in lista_tarefas:
         print(f"\nDescrição: {tarefa.desc}, Tempo: {tarefa.tempo} horas, Status: {tarefa.status}, ID: {tarefa.id}\n")
-return 1
+    return 1
 
 # b)Exibe apenas tarefas com status ativa
-#Não há tarefas concluídas/qualquer na lista?
 def verAtivas(lista_tarefas):
     for tarefa in lista_tarefas:
         if tarefa.status == 'ativa':
             print(f"\nDescrição: {tarefa.desc}, Tempo: {tarefa.tempo} horas, Status: {tarefa.status}, ID: {tarefa.id}\n")             
 
 # c)Exibe apenas tarefas com status concluída
-#Não há tarefas concluídas/qualquer na lista?
 def verConcluida(lista_tarefas):
     for tarefa in lista_tarefas:
         if tarefa.status == 'concluída':
@@ -76,54 +74,61 @@ def visualizaTarefa(lista_tarefas):
         elif opcao == 4:
             break
 
-# !Bônus - prioridade visualização (Ativas /Limite tempo crescente/ concluídas)..
-
 ################################################################################
-# Atualizar Tarefas !!!!
+# Atualizar Tarefas
 def atualizaTarefa(lista_tarefas):
-    print("\nDigite o ID da tarefa que deseja atualizar: ")
-    if verTudo(lista_tarefas) == True:   #Verifica se há tarefas na lista
-        try:   # Inicia bloco com exceções esperadas
-            attid = input("ID: ") #1ª exceção esperada
-            for tarefa in lista_tarefas:
-                if attid == tarefa.id:
-                    print("\nTarefa selecionada: ")
-                    print(f"\n\tDescrição: {tarefa.desc}, Tempo: {tarefa.tempo} horas, Status: {tarefa.status} ID: {tarefa.id}")
-                    print("\nDigite a opção que deseja atualizar: ")
-                    print("\n\t1 - Descrição")
-                    print("\n\t2 - Tempo")
-                    print("\n\t3 - Status")
-                    opt = int(input( )) #2ª exceção esperada
-                    if opt == 1:
-                        nova_desc = input("\nDigite a nova descrição: ")
-                        tarefa.desc = nova_desc
-                    elif opt == 2:
-                        novo_tempo = float(input("\nDigite o novo tempo: "))
-                        tarefa.tempo = novo_tempo
-                    elif opt == 3:
-                        novo_status = input("\nDigite uma opção para o novo status (1 - Ativa, 2 - Concluída): ") #3ª exceção esperada
-                        if novo_status == '1':
-                            tarefa.status = 'ativa'
-                        elif novo_status == '2':
-                            tarefa.status = 'concluída'
-                        else:
-                            raise ValueError #Adiciona a 3ª exceção para ValueError 
-                else:
-                    raise ValueError #Adiciona a 2ª exceção para ValueError 
-        except ValueError: #Adiciona a 1ª e inclui todas as exceções adicionadas ao ValueError, exibe mensagem de erro
-            print("\nErro. Motivo: operação inválida.")   
+    try:
+        # Verifica se há tarefas na lista
+        if not verTudo(lista_tarefas):
+            print("Não há tarefas para atualizar.")
+            return
+
+        # Solicita o ID da tarefa que deseja atualizar
+        attid = input("Digite o ID da tarefa que deseja atualizar: ")
+
+        # Itera sobre as tarefas na lista
+        for tarefa in lista_tarefas:
+            if attid == tarefa.id:
+                print("\nTarefa selecionada:")
+                print(f"Descrição: {tarefa.desc}, Tempo: {tarefa.tempo} horas, Status: {tarefa.status} ID: {tarefa.id}")
+                print("\nDigite a opção que deseja atualizar:")
+                print("\t1 - Descrição")
+                print("\t2 - Tempo")
+                print("\t3 - Status")
+                opt = int(input())
+
+                if opt == 1:
+                    nova_desc = input("\nDigite a nova descrição: ")
+                    tarefa.desc = nova_desc
+                elif opt == 2:
+                    novo_tempo = float(input("\nDigite o novo tempo: "))
+                    tarefa.tempo = novo_tempo
+                elif opt == 3:
+                    novo_status = input("\nDigite uma opção para o novo status (1 - Ativa, 2 - Concluída): ")
+                    if novo_status == '1':
+                        tarefa.status = 'ativa'
+                    elif novo_status == '2':
+                        tarefa.status = 'concluída'
+                    else:
+                        raise ValueError("Opção inválida para o status.")
+                break  # Interrompe o loop se a tarefa for encontrada
+        else:
+            raise ValueError("ID de tarefa não encontrado.")
+
+    except ValueError:
+        print(f"\nErro. Motivo: Operação inválida.")
+
 ################################################################################
 
 # concluir Tarefas
-#CORRIGIR SITUACAO LISTA VAZIA DE ATIVAS
 def concluiTarefa(lista_tarefas):
     print("\tTarefas que podem ser concluídas: ")
     verAtivas(lista_tarefas)
     conclui_id = input("Digite o ID da tarefa que deseja concluir: ")
     for tarefa in lista_tarefas:
         if conclui_id == tarefa.id:
-                tarefa.status = 'concluída'
-                print("\nBom trabalho! Tarefa Concluída.")
+            tarefa.status = 'concluída'
+            print("\nBom trabalho! Tarefa Concluída.")
         else:
             print("\nErro. Motivo: ID não existe")
 
